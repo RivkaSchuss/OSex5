@@ -86,9 +86,6 @@
 		<Unit filename="/Users/rivkaschuss/CLionProjects/OSex5/ex52.c">
 			<Option target="OSex5"/>
 		</Unit>
-		<Unit filename="/Users/rivkaschuss/CLionProjects/OSex5/getChar.c">
-			<Option target="OSex5"/>
-		</Unit>
 		<Unit filename="/Users/rivkaschuss/CLionProjects/OSex5/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

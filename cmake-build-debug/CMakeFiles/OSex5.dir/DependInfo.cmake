@@ -6,7 +6,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_CHECK_C
   "/Users/rivkaschuss/CLionProjects/OSex5/ex51.c" "/Users/rivkaschuss/CLionProjects/OSex5/cmake-build-debug/CMakeFiles/OSex5.dir/ex51.c.o"
   "/Users/rivkaschuss/CLionProjects/OSex5/ex52.c" "/Users/rivkaschuss/CLionProjects/OSex5/cmake-build-debug/CMakeFiles/OSex5.dir/ex52.c.o"
-  "/Users/rivkaschuss/CLionProjects/OSex5/getChar.c" "/Users/rivkaschuss/CLionProjects/OSex5/cmake-build-debug/CMakeFiles/OSex5.dir/getChar.c.o"
   )
 set(CMAKE_C_COMPILER_ID "AppleClang")
 

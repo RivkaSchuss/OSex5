@@ -177,33 +177,6 @@ ex52.c.s:
 	$(MAKE) -f CMakeFiles/OSex5.dir/build.make CMakeFiles/OSex5.dir/ex52.c.s
 .PHONY : ex52.c.s
 
-getChar.o: getChar.c.o
-
-.PHONY : getChar.o
-
-# target to build an object file
-getChar.c.o:
-	$(MAKE) -f CMakeFiles/OSex5.dir/build.make CMakeFiles/OSex5.dir/getChar.c.o
-.PHONY : getChar.c.o
-
-getChar.i: getChar.c.i
-
-.PHONY : getChar.i
-
-# target to preprocess a source file
-getChar.c.i:
-	$(MAKE) -f CMakeFiles/OSex5.dir/build.make CMakeFiles/OSex5.dir/getChar.c.i
-.PHONY : getChar.c.i
-
-getChar.s: getChar.c.s
-
-.PHONY : getChar.s
-
-# target to generate assembly for a file
-getChar.c.s:
-	$(MAKE) -f CMakeFiles/OSex5.dir/build.make CMakeFiles/OSex5.dir/getChar.c.s
-.PHONY : getChar.c.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -219,9 +192,6 @@ help:
 	@echo "... ex52.o"
 	@echo "... ex52.i"
 	@echo "... ex52.s"
-	@echo "... getChar.o"
-	@echo "... getChar.i"
-	@echo "... getChar.s"
 .PHONY : help
 
 

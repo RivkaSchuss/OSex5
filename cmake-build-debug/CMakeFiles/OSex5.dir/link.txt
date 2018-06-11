@@ -1,1 +1,1 @@
-/Library/Developer/CommandLineTools/usr/bin/cc -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/OSex5.dir/ex51.c.o CMakeFiles/OSex5.dir/getChar.c.o CMakeFiles/OSex5.dir/ex52.c.o  -o OSex5 
+/Library/Developer/CommandLineTools/usr/bin/cc -g -Wl,-search_paths_first -Wl,-headerpad_max_install_names  CMakeFiles/OSex5.dir/ex51.c.o CMakeFiles/OSex5.dir/ex52.c.o  -o OSex5 

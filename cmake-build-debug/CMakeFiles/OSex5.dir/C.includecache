@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/rivkaschuss/CLionProjects/OSex5/ex51.c
+stdio.h
+-
+unistd.h
+-
+termios.h
+-
+stdlib.h
+-
+signal.h
+-
+
+/Users/rivkaschuss/CLionProjects/OSex5/ex52.c
+signal.h
+-
+zconf.h
+-
+stdio.h
+-
+stdlib.h
+-
+

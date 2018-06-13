@@ -4,12 +4,17 @@
 #include <unistd.h>
 #include <termios.h>
 #include <stdlib.h>
+#include <signal.h>
 
 #define ERROR "Error in system call.\n"
+#define TETRIS "./draw.out"
+#define TRUE 1
+#define FALSE 0
 
-int main() {
-    printf("Hello, World!\n");
-    return 0;
+
+void error() {
+    write(2, ERROR, sizeof(ERROR));
+    exit(-1);
 }
 
 char getch() {
@@ -32,7 +37,46 @@ char getch() {
     return (buf);
 }
 
-void error() {
-    write(2, ERROR, sizeof(ERROR));
-    exit(-1);
+int gameKey(char c) {
+    if (c == 'a' || c == 'd' || c == 's' || c == 'w' || c == 'q') {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
 }
+
+
+int main() {
+    int Pipe[2], pid;
+    pipe(Pipe);
+
+    if ((pid = fork()) < 0) {
+        error();
+    }
+    if (pid == 0) {
+        //in child
+        dup2(Pipe[0], 0);
+        execlp(TETRIS, TETRIS, NULL);
+        error();
+    }
+
+    //in father
+    char c;
+    while (TRUE) {
+        c = getch();
+        if (!gameKey(c)) {
+            continue;
+        }
+        if (write(Pipe[1], &c, 1) < 0) {
+            error();
+        }
+        kill(pid, SIGUSR2);
+        if (c == 'q') {
+            break;
+        }
+    }
+    return 0;
+}
+
+
+

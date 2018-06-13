@@ -1,6 +1,7 @@
 //Rivka Schuss 340903129
 #include <signal.h>
-#include <zconf.h>
+#include <termios.h>
+#include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -86,7 +87,7 @@ void updatePos(Board* board, int x, int y, int rotate) {
         if (y >= BOARD_SIZE - 1)
             return;
     }
-    if (!rotate)
+    if (!rotate) {
         if (board->shape == HORIZ) {
             board->gameBoard[board->x_position][board->y_position] = ' ';
             board->gameBoard[board->x_position][board->y_position + 1] = ' ';
@@ -96,6 +97,7 @@ void updatePos(Board* board, int x, int y, int rotate) {
             board->gameBoard[board->x_position + 1][board->y_position] = ' ';
             board->gameBoard[board->x_position + 2][board->y_position] = ' ';
         }
+    }
 
     board->x_position = x;
     board->y_position = y;

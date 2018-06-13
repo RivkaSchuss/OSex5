@@ -10,13 +10,20 @@
 #define TETRIS "./draw.out"
 #define TRUE 1
 #define FALSE 0
+#define STD_ERROR 2
 
-
+/**
+ * writes an error
+ */
 void error() {
-    write(2, ERROR, sizeof(ERROR));
+    write(STD_ERROR, ERROR, sizeof(ERROR));
     exit(-1);
 }
 
+/**
+ * gets the char entered
+ * @return the char entered
+ */
 char getch() {
     char buf = 0;
     struct termios old = {0};
@@ -37,6 +44,11 @@ char getch() {
     return (buf);
 }
 
+/**
+ * returns true if the key entered was a game key
+ * @param c the key entered
+ * @return true if the char was a key, false if not
+ */
 int gameKey(char c) {
     if (c == 'a' || c == 'd' || c == 's' || c == 'w' || c == 'q') {
         return TRUE;
@@ -46,16 +58,21 @@ int gameKey(char c) {
 }
 
 
+/**
+ * the program main
+ * @return
+ */
 int main() {
-    int Pipe[2], pid;
-    pipe(Pipe);
+    int fileDes[2], pid;
+    pipe(fileDes);
 
-    if ((pid = fork()) < 0) {
+    pid = fork();
+    if (pid  < 0) {
         error();
     }
     if (pid == 0) {
         //in child
-        dup2(Pipe[0], 0);
+        dup2(fileDes[0], 0);
         execlp(TETRIS, TETRIS, NULL);
         error();
     }
@@ -67,7 +84,7 @@ int main() {
         if (!gameKey(c)) {
             continue;
         }
-        if (write(Pipe[1], &c, 1) < 0) {
+        if (write(fileDes[1], &c, 1) < 0) {
             error();
         }
         kill(pid, SIGUSR2);

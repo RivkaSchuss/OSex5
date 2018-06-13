@@ -1,15 +1,22 @@
 //Rivka Schuss 340903129
+
+
 #include <signal.h>
-#include <termios.h>
-#include <unistd.h>
-#include <stdio.h>
+#include <zconf.h>
 #include <stdlib.h>
+#include <stdio.h>
+
 
 #define BOARD_SIZE 20
 #define HORIZ 0
 #define VERTICAL 1
 #define TRUE 1
+#define STD_ERROR 2
+#define ERROR "Error in system call.\n"
 
+/**
+ * the game board struct
+ */
 typedef struct Board {
     char gameBoard[BOARD_SIZE][BOARD_SIZE];
     int x_position;
@@ -24,20 +31,33 @@ void updatePos(Board* board, int x, int y, int rotate);
 void initializeBoard(Board* board);
 void printBoard(Board* board);
 void movePiece(int sig);
-void updateShape(Board* board);
+void rotateShape(Board *board);
 void getKey(int sig);
 
 int main() {
     initializeBoard(&board);
     printBoard(&board);
     signal(SIGALRM, movePiece);
-    alarm(1);
+    alarm(TRUE);
     signal(SIGUSR2, getKey);
     while (TRUE) {
+        //wait until signal from a process
         pause();
     }
 }
 
+/**
+ * writes an error
+ */
+void error() {
+    write(STD_ERROR, ERROR, sizeof(ERROR));
+    exit(-1);
+}
+
+/**
+ * initializes the game board
+ * @param board reference to the game board
+ */
 void initializeBoard(Board* board) {
     board->shape = HORIZ;
     board->x_position = 0;
@@ -46,8 +66,15 @@ void initializeBoard(Board* board) {
     updatePos(board, board->x_position, board->y_position, 0);
 }
 
+/**
+ * prints the game board
+ * @param board reference to the game board
+ */
 void printBoard(Board* board) {
-    system("clear");
+    if (system("clear") < 0) {
+        error();
+    }
+
     int i, j;
     for (i = 0; i < BOARD_SIZE; i++) {
         for (j = 0; j < BOARD_SIZE; j++) {
@@ -57,6 +84,10 @@ void printBoard(Board* board) {
     }
 }
 
+/**
+ * clears the game board
+ * @param board reference to the game board
+ */
 void eraseBoard(Board* board) {
     int i, j;
     for (i = 0; i < BOARD_SIZE - 1; i++) {
@@ -73,6 +104,13 @@ void eraseBoard(Board* board) {
     }
 }
 
+/**
+ * updates the piece's position
+ * @param board reference to the game board
+ * @param x the current x position
+ * @param y the current y position
+ * @param rotate whether or not the piece is rotated
+ */
 void updatePos(Board* board, int x, int y, int rotate) {
 
     if (board->shape == HORIZ) {
@@ -121,6 +159,10 @@ void updatePos(Board* board, int x, int y, int rotate) {
     }
 }
 
+/**
+ * moves a piece
+ * @param sig the signal
+ */
 void movePiece(int sig) {
     signal(SIGALRM, movePiece);
     alarm(TRUE);
@@ -129,7 +171,11 @@ void movePiece(int sig) {
 }
 
 
-void updateShape(Board* board) {
+/**
+ * rotates the game piece
+ * @param board reference to the game board
+ */
+void rotateShape(Board *board) {
     if (board->shape == HORIZ) {
         board->gameBoard[board->x_position][board->y_position] = ' ';
         board->gameBoard[board->x_position][board->y_position + 1] = ' ';
@@ -157,6 +203,10 @@ void updateShape(Board* board) {
 }
 
 
+/**
+ * gets the key entered to progress
+ * @param sig the signal
+ */
 void getKey(int sig) {
     signal(SIGUSR2, getKey);
     char c;
@@ -172,7 +222,7 @@ void getKey(int sig) {
             updatePos(&board, board.x_position, board.y_position - 1, 0);
             break;
         case 'w':
-            updateShape(&board);
+            rotateShape(&board);
             break;
         case 'q':
             exit(TRUE);
@@ -181,5 +231,6 @@ void getKey(int sig) {
     }
     printBoard(&board);
 }
+
 
 

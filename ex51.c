@@ -64,8 +64,10 @@ int gameKey(char c) {
  */
 int main() {
     int fileDes[2], pid;
+    //creates a pipe
     pipe(fileDes);
 
+    //creates a new process
     pid = fork();
     if (pid  < 0) {
         error();
@@ -73,6 +75,7 @@ int main() {
     if (pid == 0) {
         //in child
         dup2(fileDes[0], 0);
+        //runs the tetris program
         execlp(TETRIS, TETRIS, NULL);
         error();
     }
@@ -80,6 +83,7 @@ int main() {
     //in father
     char c;
     while (TRUE) {
+        //scans the char entered
         c = getch();
         if (!gameKey(c)) {
             continue;

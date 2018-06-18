@@ -23,8 +23,8 @@ signal.h
 -
 zconf.h
 -
-stdio.h
--
 stdlib.h
+-
+stdio.h
 -
 

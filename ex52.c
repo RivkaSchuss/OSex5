@@ -37,8 +37,11 @@ void getKey(int sig);
 int main() {
     initializeBoard(&board);
     printBoard(&board);
+    //signals to the move piece function
     signal(SIGALRM, movePiece);
+    //sends an alarms
     alarm(TRUE);
+    //signals to the get key function
     signal(SIGUSR2, getKey);
     while (TRUE) {
         //wait until signal from a process
@@ -71,6 +74,7 @@ void initializeBoard(Board* board) {
  * @param board reference to the game board
  */
 void printBoard(Board* board) {
+    //clears the board
     if (system("clear") < 0) {
         error();
     }
@@ -164,6 +168,7 @@ void updatePos(Board* board, int x, int y, int rotate) {
  * @param sig the signal
  */
 void movePiece(int sig) {
+    //sends a signal
     signal(SIGALRM, movePiece);
     alarm(TRUE);
     updatePos(&board, board.x_position + 1, board.y_position, 0);
@@ -208,6 +213,7 @@ void rotateShape(Board *board) {
  * @param sig the signal
  */
 void getKey(int sig) {
+    //sends a signal
     signal(SIGUSR2, getKey);
     char c;
     c = getchar();
